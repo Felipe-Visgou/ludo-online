@@ -156,17 +156,16 @@ public class Server implements Runnable, ActionListener {
 		// Exemplo da msg recebida.
 		// QUEM ENVIOU#RED x x x x x x x x #BLUE x x x x x x x x #YELLOW x x x x
 		// x x x x#GREEN x x x x x x x x
-	//	System.out.println("ESTOU NO nextPlayerServer");
-		//System.out.println("msg = "+ Msg);
 		String[] quebraMsg = Msg.split("%");
 		String[] quebraquebra = quebraMsg[0].split("@");
 		String jogadorAtual = quebraquebra[0];
 		String estadoAtual = quebraMsg[1];
 		String jogadorSeguinte = null;
-		//System.out.println("jogadorAtual = " + jogadorAtual);
-		//System.out.println("estadoAtual = " + estadoAtual);
+		String round_recebido = quebraquebra[1];
+		Integer temp = getPlayerRound(jogadorAtual);
+		if(round_recebido.equals(temp.toString()))
+			return jogadorAtual+"@"+round_recebido+"%"+estadoAtual;
 		for(int i = 0; i < newClients.size(); i++){
-		//	System.out.println("(dentro do for) getUserThread = "+newClients.get(i).getUserThread());
 			if(newClients.get(i).getUserThread().equals(jogadorAtual)){
 				if(i == newClients.size()-1)
 					jogadorSeguinte = newClients.get(0).getUserThread();

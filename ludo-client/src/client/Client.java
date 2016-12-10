@@ -83,20 +83,25 @@ public class Client implements Runnable, client.Subject {
 	}
 
 	public void handle(String newMsg) {
-		
+		FacadeMovimento facade = FacadeMovimento.getInstance();
 		if (newMsg.equals("###")) {
 			System.out.println("O usuario saiu");
 		} else {
 			if(newMsg.equals("TIMED OUT")){
 				System.out.println("Acaboouuu");
-				FacadeMovimento.getInstance().popUpTimedOut();
+				facade.popUpTimedOut();
 			}
 			else{
 				String[] parts = newMsg.split(" ");
 				if(parts[0].equals("BEGIN:")){
 					FacadeMovimento.getInstance().gameStarted();
 					System.out.println(parts[1]);
-					FacadeMovimento.getInstance().setPlayerTurn(parts[1]);
+					facade.setPlayerTurn(parts[1]);
+					if(!facade.getPlayerTurn().equals(facade.getNickBoard())){
+						facade.FacadeRollDiceStatus(false);
+					}
+					else
+						facade.FacadeRollDiceStatus(true);
 				}
 				else
 					this.setNovaJogada(newMsg);
